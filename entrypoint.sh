@@ -2,42 +2,36 @@
 
 set -e
 
-# setup ssh-private-key
+# 设置 SSH 私钥
 mkdir -p /root/.ssh/
 echo "$INPUT_DEPLOY_KEY" > /root/.ssh/id_rsa
 chmod 600 /root/.ssh/id_rsa
 ssh-keyscan -t rsa github.com >> /root/.ssh/known_hosts
 
-
-
-# setup deploy git account
+# 设置部署 Git 账户信息
 git config --global user.name "$INPUT_USER_NAME"
 git config --global user.email "$INPUT_USER_EMAIL"
 
-# install hexo env
-npm install hexo-cli -g
+# 安装 Hexo 环境
 npm install
 
-
-# deployment
-if [ "$INPUT_COMMIT_MSG" = "none" ]
-then
-    # 避免hexo-butterfly-douban构建冲突 使用 hexo g -deploy
+# 部署
+if [ "$INPUT_COMMIT_MSG" = "none" ]; then
+    # 避免 hexo-butterfly-douban 构建冲突，使用 hexo g -deploy
     hexo clean
     hexo g
     hexo deploy
-
-elif [ "$INPUT_COMMIT_MSG" = "" ] || [ "$INPUT_COMMIT_MSG" = "default" ]
-then
-    # pull original publish repo
+elif [ "$INPUT_COMMIT_MSG" = "" ] || [ "$INPUT_COMMIT_MSG" = "default" ]; then
+    # 拉取原始发布仓库
     NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js
     hexo clean
     hexo g
     hexo deploy
 else
+    # 指定提交消息
     NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js
     hexo clean
     hexo g -deploy -m "$INPUT_COMMIT_MSG"
 fi
 
-echo ::set-output name=notify::"Deploy complate."
+echo ::set-output name=notify::"部署完成。"
