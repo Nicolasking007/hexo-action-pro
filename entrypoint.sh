@@ -13,25 +13,27 @@ git config --global user.name "$INPUT_USER_NAME"
 git config --global user.email "$INPUT_USER_EMAIL"
 
 # 安装 Hexo 环境
+echo ">_ Install NPM dependencies ..."
 npm install
+
+echo ">_ Clean cache files ..."
+npx hexo clean
+
+echo ">_ Generate file ..."
+npx hexo generate
 
 # 部署
 if [ "$INPUT_COMMIT_MSG" = "none" ]; then
     # 避免 hexo-butterfly-douban 构建冲突，使用 hexo g -deploy
-    hexo clean
-    hexo g
     hexo deploy
 elif [ "$INPUT_COMMIT_MSG" = "" ] || [ "$INPUT_COMMIT_MSG" = "default" ]; then
     # 拉取原始发布仓库
     NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js
-    hexo clean
-    hexo g
     hexo deploy
 else
     # 指定提交消息
     NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js
-    hexo clean
-    hexo g -deploy -m "$INPUT_COMMIT_MSG"
+    hexo deploy -m "$INPUT_COMMIT_MSG"
 fi
 
 echo ::set-output name=notify::"部署完成。"
