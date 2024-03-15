@@ -10,7 +10,8 @@ LABEL "com.github.actions.description"="Hexo CI/CD action for automating deploym
 LABEL "com.github.actions.icon"="upload-cloud"
 LABEL "com.github.actions.color"="green"
 
-COPY README.md LICENSE entrypoint.sh /
+COPY README.md LICENSE /
+COPY entrypoint.sh /entrypoint.sh
 COPY sync_deploy_history.js /sync_deploy_history.js
 
 RUN apt-get update > /dev/null && \
