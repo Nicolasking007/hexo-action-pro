@@ -34,7 +34,7 @@ elif [ "$INPUT_COMMIT_MSG" = "" ] || [ "$INPUT_COMMIT_MSG" = "default" ]; then
 else
     # 指定提交消息
     NODE_PATH=$NODE_PATH:$(pwd)/node_modules node /sync_deploy_history.js
-    hexo g deploy -m "$INPUT_COMMIT_MSG"
+    hexo g -deploy -m "$INPUT_COMMIT_MSG"
 fi
 
-echo ::set-output name=notify::"部署完成。"
+echo ::set-output name=notify::"Deploy complate."
