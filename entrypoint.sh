@@ -14,8 +14,9 @@ git config --global user.email "$INPUT_USER_EMAIL"
 
 # 安装 Hexo 环境
 echo ">_ Install NPM dependencies ..."
-npm install -g hexo-cli
-npm install
+npm i -g hexo-cli
+npm i --save
+
 
 
 echo ">_ Clean cache files ..."
