@@ -1,4 +1,4 @@
-# GitHub Action - Hexo CI/CD 🌱
+# GitHub Action pro - Hexo CI/CD 🌱
 
 <a href="https://github.com/marketplace/actions/hexo-action"><img alt="View Action" src="https://img.shields.io/badge/action-marketplace-blue.svg?logo=github&color=orange"></a>
 <a href="https://opensource.org/licenses/MIT"><img alt="License: MIT" src="https://img.shields.io/badge/License-MIT-green.svg?logo=github"></a>
